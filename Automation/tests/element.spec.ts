@@ -139,13 +139,72 @@ import fetch from 'cross-fetch';
 //     await expect(page).toHaveURL(/links/)
 // })
 
-test('Click Links', async ({ page }) => {
-    await page.goto('https://demoqa.com/links');
-    const [newPage] = await Promise.all([
-        page.waitForEvent('popup'),
-        page.locator('#simpleLink').click()
-    ]);
-    await page.locator('#simpleLink').click();
-    // console.log('here', newPage.url());
-    await expect(newPage).toHaveURL('https://demoqa.com');
+// test('Click Links', async ({ page }) => {
+//     await page.goto('https://demoqa.com/links');
+//     const [newPage] = await Promise.all([
+//         page.waitForEvent('popup'),
+//         page.locator('#simpleLink').click()
+//     ]);
+//     await page.locator('#simpleLink').click();
+//     // console.log('here', newPage.url());
+//     await expect(newPage).toHaveURL('https://demoqa.com');
+// })
+
+// test('Navigate broken links', async ({ page }) => {
+//     let ads = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
+//     await ads.enableBlockingInPage(page);
+//     await page.goto('https://demoqa.com/elements');
+//     await page.locator('//*[@class="text" and text()="Broken Links - Images"]').click();
+//     await expect(page).toHaveURL(/broken/);
+// })
+
+// test('Testing valid images', async ({ page }) => {
+//     await page.goto('https://demoqa.com/broken');
+//     const imageUrl = await page.locator('img').nth(1).getAttribute('src');
+//     console.log('Url', imageUrl)
+//     const response = await page.request.get(`https://demoqa.com${imageUrl!}`);
+//     // console.log('response', response);
+//     await expect(response.status()).toBe(200);
+// })
+
+// test('Testing invalid images', async ({ page }) => {
+//     await page.goto('https://demoqa.com/broken');
+//     const imageUrl = await page.locator('img').nth(2).getAttribute('src');
+//     console.log('Url', imageUrl)
+//     const response = await page.request.get(`https://demoqa.com${imageUrl!}`);
+//     // console.log('response', response);
+//     await expect(response.status()).toBe(200);
+// })
+
+// test('Testing Valid link', async ({ page }) => {
+//     await page.goto('https://demoqa.com/broken');
+//     const linkCheck = await page.locator('//a[text()="Click Here for Valid Link"]').getAttribute('href');
+//     const res = await page.request.get(linkCheck!);
+//     console.log('link', res.status());
+//     await expect(res.status()).toBe(200);
+// })
+
+// test('Testing invalid link', async ({ page }) => {
+//     await page.goto('https://demoqa.com/broken');
+//     const linkCheck = await page.locator('//a[text()="Click Here for Broken Link"]').getAttribute('href');
+//     const res = await page.request.get(linkCheck!);
+//     console.log('link', res.status());
+//     await expect(res.status()).toBe(500);
+// })
+
+// test('Navigate Download', async ({ page }) => {
+//     let ads = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
+//     await ads.enableBlockingInPage(page);
+//     await page.goto('https://demoqa.com/elements');
+//     await page.locator('//*[@class="text" and text()="Upload and Download"]').click();
+//     await expect(page).toHaveURL(/upload-download/)
+// })
+
+test('Download and Upload', async ({ page }) => {
+    await page.goto('https://demoqa.com/upload-download');
+    const downloadPromise = page.waitForEvent('download');
+    await page.locator('#downloadButton').click();
+    await downloadPromise;
+    await page.locator('#uploadFile').setInputFiles('C:/Users/vinay/OneDrive/Pictures/Chat.jpg');
+    await expect(page.locator('//*[@id="uploadedFilePath"]')).toBeVisible();
 })
