@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, chromium } from '@playwright/test';
 import { PlaywrightBlocker } from '@cliqz/adblocker-playwright'
 import fetch from 'cross-fetch';
 
@@ -151,11 +151,40 @@ import fetch from 'cross-fetch';
 //     await expect(page).toHaveURL(/menu/);
 // })
 
-test('Testing Menu', async ({ page }) => {
-    await page.goto('https://demoqa.com/menu');
-    await page.locator('//a[text()="Main Item 2"]').hover();
-    const sublist = page.locator('//*[text()="SUB SUB LIST"]')
-    await expect(sublist).toBeVisible();
-    await sublist.hover();
-    await expect(page.locator('//a[text()="Sub Sub Item 1"]')).toBeVisible();
+// test('Testing Menu', async ({ page }) => {
+//     await page.goto('https://demoqa.com/menu');
+//     await page.waitForLoadState();
+//     await page.locator('//a[text()="Main Item 2"]').hover();
+//     await expect(page.getByText('SUB SUB LIST »')).toBeVisible();
+//     await page.getByText('SUB SUB LIST »').hover();
+//     await expect(page.locator('//a[text()="Sub Sub Item 1"]')).toBeVisible();
+// })
+
+// test('Navigate Select Menu', async ({ page }) => {
+//     const ad = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
+//     await ad.enableBlockingInPage(page);
+//     await page.goto('https://demoqa.com/widgets');
+//     await page.locator('//*[@class="text" and text()="Select Menu"]').click();
+//     await expect(page).toHaveURL(/select-menu/);
+// })
+
+// idea is to select first then another select 
+test('Testing Select Menu', async ({ page }) => {
+    await page.goto('https://demoqa.com/select-menu');
+    await page.waitForLoadState();
+    await page.locator('#react-select-2-input').fill('group 1');
+    await page.locator('//*[text()="Group 1, option 2"]').click();
+    await expect(page.locator(".css-1dimb5e-singleValue").first()).toHaveText('Group 1, option 2');
+    await page.locator("#react-select-3-input").click();
+    await page.getByText("Mr.").click();
+    await expect(page.locator(".css-1dimb5e-singleValue").nth(1)).toHaveText('Mr.');
+    await page.locator('#oldSelectMenu').selectOption('3');
+    await expect(page.locator('#oldSelectMenu')).toHaveValue('3');
+    await page.locator('#react-select-4-input').fill('green');
+    await page.locator('//*[text()="Green"]').nth(1).click();
+    await expect(page.locator('.css-9jq23d')).toHaveText('Green');
+    await page.locator('//*[@aria-label="Remove Green"]').click();
+    await expect(page.locator('//body')).not.toHaveText('Green');
+    await page.locator('#cars').selectOption('audi');
+    await expect(page.locator('#cars')).toHaveValue('audi');
 })
