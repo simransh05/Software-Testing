@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, request } from '@playwright/test';
 import { PlaywrightBlocker } from '@cliqz/adblocker-playwright'
 import fetch from 'cross-fetch';
 
@@ -16,15 +16,24 @@ import fetch from 'cross-fetch';
 //     await expect(page).toHaveURL(/sortable/);
 // })
 
-test('Testing Sortable', async ({ page }) => {
-    await page.goto('https://demoqa.com/sortable');
-    const first = page.locator('.list-group-item').nth(0);
-    const second = page.locator('.list-group-item').nth(1);
-    await first.dragTo(second);
-    await expect(page.locator('.list-group-item').nth(1)).toHaveText('One');
-    await page.reload();
-    await expect(page.locator('.list-group-item').nth(0)).toHaveText('One');
-})
+// test('Testing Sortable', async ({ page }) => {
+//     await page.goto('https://demoqa.com/sortable');
+//     await page.waitForLoadState();
+//     const box = await page.locator('.list-group-item').first().boundingBox();
+//     console.log('here', box);
+//     await page.mouse.move(box!.x + 10, box!.y + 10);
+//     await page.mouse.down();
+//     await page.mouse.move(
+//         box!.x,
+//         box!.y + box!.height * 1.5,
+//         { steps: 50 }
+//     );
+//     await page.waitForTimeout(500);
+//     await page.mouse.up();
+//     await expect(page.locator('.list-group-item').nth(1)).toHaveText('One');
+//     await page.reload();
+//     await expect(page.locator('.list-group-item').nth(0)).toHaveText('One');
+// })
 
 // test('Navigate Selectable', async ({ page }) => {
 //     const ad = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
@@ -56,4 +65,51 @@ test('Testing Sortable', async ({ page }) => {
 //     await page.waitForLoadState();
 //     await page.locator('//*[@class="text" and text()="Resizable"]').click();
 //     await expect(page).toHaveURL(/resizable/);
+// })
+
+// test('Testing Resizable', async ({ page }) => {
+//     await page.goto('https://demoqa.com/resizable');
+//     const first = await page.locator('.react-resizable-handle').first();
+//     const box = await page.locator('#resizableBoxWithRestriction').boundingBox();
+//     await first.hover()
+//     await page.mouse.down();
+//     await page.mouse.move(
+//         box!.width + box!.x + 100,
+//         box!.height + box!.y + 10
+//     )
+//     await page.mouse.up();
+//     const afterbox = await page.locator('#resizableBoxWithRestriction').boundingBox();
+//     console.log('here', afterbox, box)
+//     await expect(box!.width).toBeLessThan(afterbox!.width);
+// })
+
+// test('Navigate Droppable', async({page})=>{
+//     const ad = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
+//     await ad.enableBlockingInPage(page);
+//     await page.goto('https://demoqa.com/interaction');
+//     await page.waitForLoadState();
+//     await page.locator('//*[@class="text" and text()="Droppable"]').click();
+//     await expect(page).toHaveURL(/droppable/);
+// })
+
+test('Testing Droppable', async ({ page }) => {
+    await page.goto('https://demoqa.com/droppable');
+    const first = page.locator('#draggable');
+    const second = page.locator('#droppable').first();
+    console.log('here')
+    await first.dragTo(second);
+    await expect(page.locator('#droppable').first()).toHaveText('Dropped!');
+})
+
+// test('Navigate Dragabble', async({page})=>{
+//     const ad = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
+//     await ad.enableBlockingInPage(page);
+//     await page.goto('https://demoqa.com/interaction');
+//     await page.waitForLoadState();
+//     await page.locator('//*[@class="text" and text()="Dragabble"]').click();
+//     await expect(page).toHaveURL(/dragabble/);
+// })
+
+// test('Testing Dragabble', async ({ page }) => {
+//     await page.goto('https://demoqa.com/dragabble');
 // })
