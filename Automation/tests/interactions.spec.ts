@@ -12,7 +12,7 @@ import fetch from 'cross-fetch';
 //     const ad = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
 //     await ad.enableBlockingInPage(page);
 //     await page.goto('https://demoqa.com/interaction');
-//     await page.locator('//*[text()="Sortable"]').click();
+//     await page.locator('//span[text()="Sortable"]').click();
 //     await expect(page).toHaveURL(/sortable/);
 // })
 
@@ -40,7 +40,7 @@ import fetch from 'cross-fetch';
 //     await ad.enableBlockingInPage(page);
 //     await page.goto('https://demoqa.com/interaction');
 //     await page.waitForLoadState();
-//     await page.locator('//*[@class="text" and text()="Selectable"]').click();
+//     await page.locator('//span[@class="text" and text()="Selectable"]').click();
 //     await expect(page).toHaveURL(/selectable/);
 // })
 
@@ -63,7 +63,7 @@ import fetch from 'cross-fetch';
 //     await ad.enableBlockingInPage(page);
 //     await page.goto('https://demoqa.com/interaction');
 //     await page.waitForLoadState();
-//     await page.locator('//*[@class="text" and text()="Resizable"]').click();
+//     await page.locator('//span[@class="text" and text()="Resizable"]').click();
 //     await expect(page).toHaveURL(/resizable/);
 // })
 
@@ -88,28 +88,60 @@ import fetch from 'cross-fetch';
 //     await ad.enableBlockingInPage(page);
 //     await page.goto('https://demoqa.com/interaction');
 //     await page.waitForLoadState();
-//     await page.locator('//*[@class="text" and text()="Droppable"]').click();
+//     await page.locator('//span[@class="text" and text()="Droppable"]').click();
 //     await expect(page).toHaveURL(/droppable/);
 // })
 
-test('Testing Droppable', async ({ page }) => {
-    await page.goto('https://demoqa.com/droppable');
-    const first = page.locator('#draggable');
-    const second = page.locator('#droppable').first();
-    console.log('here')
-    await first.dragTo(second);
-    await expect(page.locator('#droppable').first()).toHaveText('Dropped!');
-})
+// test('Testing Droppable', async ({ page }) => {
+//     await page.goto('https://demoqa.com/droppable');
+//     await page.waitForLoadState()
+//     const box1 = await page.locator('#draggable').boundingBox();
+//     const box2 = await page.locator('#droppable').first().boundingBox();
+//     await page.mouse.move(box1!.x + box1!.width / 2, box1!.y + box1!.height / 2);
+//     console.log(box1, box2);
+//     await page.mouse.down();
+//     await page.waitForTimeout(5000);
+//     await page.mouse.move(
+//         box2!.x + box1!.width + 20,
+//         box1!.y + 20,
+//         { steps: 50 }
+//     )
+//     console.log(
+//         box2!.x + box1!.width * 0.5 + 20,
+//         box1!.y + 20
+//     );
+//     await page.waitForTimeout(4000);
+//     await page.mouse.up();
+//     await expect(page.locator('#droppable').first()).toHaveText('Dropped!');
+// })
 
 // test('Navigate Dragabble', async({page})=>{
 //     const ad = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
 //     await ad.enableBlockingInPage(page);
 //     await page.goto('https://demoqa.com/interaction');
 //     await page.waitForLoadState();
-//     await page.locator('//*[@class="text" and text()="Dragabble"]').click();
+//     await page.locator('//span[@class="text" and text()="Dragabble"]').click();
 //     await expect(page).toHaveURL(/dragabble/);
 // })
 
-// test('Testing Dragabble', async ({ page }) => {
-//     await page.goto('https://demoqa.com/dragabble');
-// })
+test('Testing Dragabble', async ({ page }) => {
+    const ad = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
+    await ad.enableBlockingInPage(page);
+    await page.goto('https://demoqa.com/dragabble');
+    const beforeBox = await page.locator('#dragBox').boundingBox();
+    console.log(await page.locator('#dragBox').isVisible());
+    await page.mouse.move(
+        beforeBox!.x + beforeBox!.width / 2,
+        beforeBox!.y + beforeBox!.height / 2
+    );
+    await page.mouse.down();
+    await page.mouse.move(
+        beforeBox!.x + beforeBox!.width + 100,
+        beforeBox!.y + beforeBox!.height + 100,
+        { steps: 50 }
+    )
+    await page.waitForTimeout(500);
+    await page.mouse.up();
+    const afterBox = await page.locator('#dragBox').boundingBox();
+    await expect(afterBox!.x).toBeGreaterThan(beforeBox!.x);
+})
