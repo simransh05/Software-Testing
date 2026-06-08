@@ -35,7 +35,7 @@ export class navbarPage {
 
     async checkCartCountMoreThan0() {
         const value = await this.cartCount.textContent()
-        console.log('value', value)
+        // console.log('value.', value)
         await expect(Number(value)).toBeGreaterThan(0);
         // check for cart count more than 0
     }

@@ -17,7 +17,10 @@ const demoSelectors = {
     checkoutFirstName: '#first-name',
     checkoutLastName: '#last-name',
     postalCode: '#postal-code',
-    checkoutContinue: '#continue'
+    checkoutContinue: '#continue',
+    finishBtn: '#finish',
+    contentHeader: '.complete-header',
+    backHome: '//*[text()="Back Home"]'
 }
 
 export default demoSelectors;

@@ -13,6 +13,9 @@ export class cartPage {
     lastName: Locator
     postalCode: Locator
     continue: Locator
+    finishBtn: Locator
+    textVerify: Locator
+    backHome: Locator
     constructor(page: Page) {
         this.page = page
         this.cartLink = page.locator(demoSelectors.cartLink);
@@ -22,6 +25,9 @@ export class cartPage {
         this.lastName = page.locator(demoSelectors.checkoutLastName);
         this.postalCode = page.locator(demoSelectors.postalCode)
         this.continue = page.locator(demoSelectors.checkoutContinue);
+        this.finishBtn = page.locator(demoSelectors.finishBtn);
+        this.textVerify = page.locator(demoSelectors.contentHeader);
+        this.backHome = page.locator(demoSelectors.backHome);
     }
 
     async gotoCartAndVerifyReach() {
@@ -43,5 +49,13 @@ export class cartPage {
         await expect(this.page).toHaveURL(/checkout-step-two/)
     }
     // continue 
-    // confirm message 
+    async finishAndVerify() {
+        await this.finishBtn.click()
+        await expect(this.textVerify).toHaveText('Thank you for your order!')
+        await expect(this.page).toHaveURL(/checkout-complete/)
+    }
+    async goBackHome() {
+        await this.backHome.click();
+        await expect(this.page).toHaveURL(/inventory/)
+    }
 }

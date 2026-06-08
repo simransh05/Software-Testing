@@ -26,4 +26,7 @@ test('Inventory', async ({ page }) => {
     await cart.gotoCartAndVerifyReach();
     await cart.doCheckoutAndVerifyPage();
     await cart.fillCheckoutInfoAndVerifyReach('s', 's', 1);
+    await cart.finishAndVerify();
+    await cart.goBackHome();
+    await navbar.checkCartCountToBe0();
 })
