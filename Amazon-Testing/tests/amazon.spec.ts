@@ -4,5 +4,7 @@ import { homePage } from '../pages/homePage';
 test('Amazon Home', async ({ page }) => {
     const home = new homePage(page);
     await home.goToHome();
-    await home.searchAndFilterCheck()
+    await home.searchAndFilterCheck('shoes')
+    await home.addToCart();
+    await home.cartCountMoreThan0();
 });

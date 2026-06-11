@@ -4,21 +4,44 @@ export class homePage {
     page: Page
     searchBox: Locator
     searchItem: Locator
-    entirePage: Locator
+    TextContent: Locator
+    addToCartBtn: Locator
+    addBtn: Locator
+    menuCount: Locator
+    confirmModal: Locator
     constructor(page: Page) {
         this.page = page
         this.searchBox = page.locator(amazon.searchBox);
         this.searchItem = page.getByRole("row");
-        this.entirePage = page.locator('//*')
+        this.TextContent = page.locator(amazon.verifySearchOutputText);
+        this.addToCartBtn = page.getByLabel('Add to cart')
+        this.addBtn = page.locator('.a-row.a-size-medium button')
+        this.menuCount = page.locator('#nav-cart-count')
+        this.confirmModal = page.locator('.a-popover-modal');
     }
     async goToHome() {
         await this.page.goto('https://www.amazon.in/')
     }
-    async searchAndFilterCheck() {
+    async searchAndFilterCheck(value: string) {
+        await this.page.waitForLoadState()
         await this.searchBox.first().click();
-        expect(this.searchBox.first()).toHaveAttribute('aria-expanded', 'true');
-        await this.searchBox.pressSequentially("shoes");
+        await expect(this.searchBox.first()).toHaveAttribute('aria-expanded', 'true', { timeout: 10000 });
+        await this.searchBox.pressSequentially(value);
         await this.searchItem.first().click();
-        expect(this.entirePage).toHaveText('1-48 of over 100,000 results for');
+        await this.page.waitForLoadState();
+        await expect(this.page).toHaveURL(/shoes/)
+        await expect(this.TextContent).toContainText('1-48 of over');
+    }
+
+    async addToCart() {
+        await this.addToCartBtn.click();
+        expect(this.confirmModal).toHaveAttribute('aria-modal', 'true');
+        await this.addBtn.first().click();
+    }
+
+    async cartCountMoreThan0() {
+        const count = await this.menuCount.textContent();
+        console.log(count);
+        expect(count).toBeGreaterThan(0);
     }
 }
