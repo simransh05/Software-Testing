@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 export class employee {
-    async getAllEmployeeAndVerify(request: APIRequestContext, endpoint: string) {
+    async getAllEmployeesAndVerify(request: APIRequestContext, endpoint: string) {
         // console.log(`${process.env.BASE_URL}${endpoint}`)
         const res = await request.get(`${process.env.BASE_URL}${endpoint}`);
         const data = await res.json();
@@ -11,7 +11,7 @@ export class employee {
         expect(data.message).toBe('Successfully! All records has been fetched.')
     }
 
-    async getIndividualDataAndVerify(request: APIRequestContext, endpoint: string, userId: string) {
+    async getIndividualEmployeeDataAndVerify(request: APIRequestContext, endpoint: string, userId: string) {
         console.log(`${process.env.BASE_URL}${endpoint}`, typeof userId)
         const res = await request.get(`${process.env.BASE_URL}${endpoint}/${userId}`);
         console.log(res);
@@ -39,7 +39,7 @@ export class employee {
         expect(data.data.employee_age).toBe(age);
     }
 
-    async deleteEmployeeAndVerify(request: APIRequestContext, endpoint: string, userId: string) {
+    async deleteOneEmployeeAndVerify(request: APIRequestContext, endpoint: string, userId: string) {
         const res = await request.get(`${process.env.BASE_URL}${endpoint}/${userId}`);
         console.log(res);
         const data = await res.json();

@@ -8,7 +8,7 @@ import { cartPage } from '../pages/cartPage';
 // login and delete account
 test.beforeEach('Login', async ({ page }) => {
     const loginUser = new loginPage(page);
-    await loginUser.login('standard_user', 'secret_sauce');
+    await loginUser.loginUser('standard_user', 'secret_sauce');
     await loginUser.loginVerify();
 })
 
@@ -26,7 +26,7 @@ test('Inventory', async ({ page }) => {
     await cart.gotoCartAndVerifyReach();
     await cart.doCheckoutAndVerifyPage();
     await cart.fillCheckoutInfoAndVerifyReach('s', 's', 1);
-    await cart.finishAndVerify();
+    await cart.finishTheProcessAndVerify();
     await cart.goBackHome();
     await navbar.checkCartCountToBe0();
 })

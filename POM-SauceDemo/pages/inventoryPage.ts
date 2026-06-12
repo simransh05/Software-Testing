@@ -1,5 +1,4 @@
 import { Page, Locator, expect } from "@playwright/test";
-import demoSelectors from "../selectors/demoSelectors";
 
 export class inventoryPage {
     page: Page
@@ -9,10 +8,10 @@ export class inventoryPage {
     addProductBtn: Locator
     constructor(page: Page) {
         this.page = page;
-        this.filterSelect = page.locator(demoSelectors.selectFilterContainer);
-        this.price = page.locator(demoSelectors.price)
-        this.productName = page.locator(demoSelectors.productName);
-        this.addProductBtn = page.locator(demoSelectors.addProductBtn)
+        this.filterSelect = page.locator('.product_sort_container');
+        this.price = page.locator('.inventory_item_price')
+        this.productName = page.locator('.inventory_item_name ');
+        this.addProductBtn = page.locator('#add-to-cart-sauce-labs-backpack')
     }
 
     async addProduct() {

@@ -1,6 +1,5 @@
 // check for logout reset and cart count 
 import { Page, Locator, expect } from '@playwright/test'
-import demoSelectors from '../selectors/demoSelectors';
 export class navbarPage {
     page: Page
     cartCount: Locator
@@ -9,20 +8,20 @@ export class navbarPage {
     resetBtn : Locator
     constructor(page: Page) {
         this.page = page;
-        this.cartCount = page.locator(demoSelectors.cartCount)
-        this.drawer = page.locator(demoSelectors.drawer)
-        this.logoutBtn = page.locator(demoSelectors.logoutBtn);
-        this.resetBtn = page.locator(demoSelectors.resetBtn);
+        this.cartCount = page.locator('.shopping_cart_badge')
+        this.drawer = page.locator('.bm-menu-wrap')
+        this.logoutBtn = page.locator('#logout_sidebar_link');
+        this.resetBtn = page.locator('#reset_sidebar_link');
     }
 
-    async openDrawer() {
+    async openNaviagtionDrawer() {
         const area = await this.drawer.getAttribute('aria-hidden');
         if (area) {
             this.drawer.click();
         }
     }
     async logoutAndverify() {
-        await this.openDrawer();
+        await this.openNaviagtionDrawer();
         await this.logoutBtn.click();
         await expect(this.page).toHaveURL('https://www.saucedemo.com/')
         // open drawer check drawer open then click and check if navigate to 

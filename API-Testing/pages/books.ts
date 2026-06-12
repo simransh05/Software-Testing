@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 export class book {
-    async getBooksAndVerify(request: APIRequestContext, endpoint: string) {
+    async getAllBooksAndVerify(request: APIRequestContext, endpoint: string) {
         const res = await request.get(`${process.env.BASE_URL}${endpoint}`);
         // console.log(res);
         const book = await res.json();

@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config();
 export class account {
 
-    async authorizedPostAndVerify(request: APIRequestContext, endpoint: string, name: string, password: string) {
+    async postLoginAndVerify(request: APIRequestContext, endpoint: string, name: string, password: string) {
         let res = await request.post(`${process.env.BASE_URL}${endpoint}`, {
             data: {
                 userName: name,
@@ -27,7 +27,7 @@ export class account {
         expect(res.status()).toBe(200);
     }
 
-    async userAccountAndVerify(request: APIRequestContext, endpoint: string, name: string, password: string): Promise<string> {
+    async createNewUserAndVerify(request: APIRequestContext, endpoint: string, name: string, password: string): Promise<string> {
         const res = await request.post(`${process.env.BASE_URL}${endpoint}`, {
             data: {
                 userName: name,
@@ -42,7 +42,7 @@ export class account {
         return body.userID;
     }
 
-    async getUserAccountAndVerify(request: APIRequestContext, endpoint: string, userId: string) {
+    async getIndividualUserAccount(request: APIRequestContext, endpoint: string, userId: string) {
         const res = await request.get(`${process.env.BASE_URL}${endpoint}${userId}`);
         console.log(res);
     }
