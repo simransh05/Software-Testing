@@ -3,8 +3,8 @@ import { homePage } from '../pages/homePage';
 
 test('Amazon Home', async ({ page }) => {
     const home = new homePage(page);
-    await home.goToHome();
-    await home.searchAndNavigateCheck('shoes')
+    await home.goToHomeAndLoad();
+    await home.searchAndNavigateCheck('shoes for woman')
     await home.addToCart();
     await home.cartCountMoreThan0();
     await home.gotoCartAndVerifyReach();
