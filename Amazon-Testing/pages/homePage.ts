@@ -7,26 +7,30 @@ export class homePage {
         this.page = page
         this.homeSelector = new homeSelector(page);
     }
-    async goToHome() {
-        await this.page.goto('https://www.amazon.in/')
+    async goToHomeAndLoad() {
+        await this.page.goto('https://www.amazon.in/');
+        await expect(this.page).toHaveURL(/amazon/)
     }
 
     async searchAndNavigateCheck(value: string) {
         await this.homeSelector.searchBox.first().click();
         await expect(this.homeSelector.searchBox.first()).toHaveAttribute('aria-expanded', 'true', { timeout: 10000 });
         await this.homeSelector.searchBox.pressSequentially(value);
-        await this.homeSelector.searchItem.first().click();
+        await this.page.keyboard.down('Enter');
+        // await this.homeSelector.searchItem.first().click();
+        await this.page.waitForLoadState('domcontentloaded');
         await expect(this.page).toHaveURL(/shoes/)
-        await expect(this.homeSelector.TextContent).toContainText('1-48 of over');
+        await expect(this.homeSelector.TextContent).toContainText('results for', { timeout: 10000 });
     }
 
     async addToCart() {
-        await this.page.waitForLoadState();
-        await this.page.waitForTimeout(2000);
-        await this.homeSelector.addToCartBtn.click();
-        console.log(await this.homeSelector.addToCartBtn.textContent())
+        await this.page.waitForTimeout(10000)
+        // console.log(await this.homeSelector.addToCartBtn.first().getAttribute('type'))
+        await this.homeSelector.addToCartBtn.nth(0).click();
+        // console.log(await this.homeSelector.addToCartBtn.first().textContent())
         await expect(this.homeSelector.confirmModal).toBeVisible({ timeout: 10000 });
         await this.homeSelector.addBtn.first().click();
+        await expect(this.homeSelector.confirmModal).not.toBeVisible({ timeout: 10000 });
     }
 
     async cartCountMoreThan0() {
@@ -35,13 +39,11 @@ export class homePage {
 
     async gotoCartAndVerifyReach() {
         await this.homeSelector.navCart.click();
-        await this.page.waitForTimeout(2000);
         await expect(this.page).toHaveURL(/cart/);
     }
 
     async verifyCartItem() {
-        console.log(await this.homeSelector.cartItem.textContent())
-        await this.page.waitForTimeout(2000)
+        // console.log(await this.homeSelector.cartItem.textContent())
         await expect(this.homeSelector.cartItem).toBeVisible();
     }
 }
