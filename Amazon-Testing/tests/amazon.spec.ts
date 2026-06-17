@@ -1,13 +1,12 @@
-import { test, expect } from '@playwright/test';
-import { homePage } from '../pages/homePage';
+import { test } from '../fixtures/fixture'
 import database from '../data/data';
 
-test('Amazon Home', async ({ page , request}) => {
-    const home = new homePage(page);
-    await home.goToHomeAndLoad();
-    await home.searchAndNavigateCheck(database.inputSearch)
-    await home.addToCart();
-    await home.cartCountMoreThan0();
-    await home.gotoCartAndVerifyReach();
-    await home.verifyCartItem();
+test('Amazon Home', async ({ homePage }) => {
+    await homePage.goToHomeAndLoad();
+    await homePage.searchAndNavigateCheck(database.inputSearch)
+    await homePage.addToCart();
+    await homePage.cartCountMoreThan0();
+    await homePage.gotoCartAndVerifyReach();
+    await homePage.verifyCartItem();
 });
+

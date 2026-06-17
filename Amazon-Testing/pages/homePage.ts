@@ -28,9 +28,9 @@ export class homePage {
         // console.log(await this.homeSelector.addToCartBtn.first().getAttribute('type'))
         await this.homeSelector.addToCartBtn.nth(0).click();
         // console.log(await this.homeSelector.addToCartBtn.first().textContent())
-        await expect(this.homeSelector.confirmModal).toBeVisible({ timeout: 10000 });
+        await expect(this.homeSelector.confirmModal).toBeVisible();
         await this.homeSelector.addBtn.first().click();
-        await expect(this.homeSelector.confirmModal).not.toBeVisible({ timeout: 10000 });
+        await expect(this.homeSelector.confirmModal).not.toBeVisible();
     }
 
     async cartCountMoreThan0() {
