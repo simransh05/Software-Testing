@@ -18,13 +18,13 @@ export class homePage {
         await this.homeSelector.searchBox.pressSequentially(value);
         await this.page.keyboard.down('Enter');
         // await this.homeSelector.searchItem.first().click();
-        await this.page.waitForLoadState('domcontentloaded');
-        await expect(this.page).toHaveURL(/shoes/)
+        await this.page.waitForLoadState('load', { timeout: 120000 });
+        await expect(this.page).toHaveURL(/shoes/);
         await expect(this.homeSelector.TextContent).toContainText('results for', { timeout: 10000 });
     }
 
     async addToCart() {
-        await this.page.waitForTimeout(10000)
+        // await this.page.waitForTimeout(10000)
         // console.log(await this.homeSelector.addToCartBtn.first().getAttribute('type'))
         await this.homeSelector.addToCartBtn.nth(0).click();
         // console.log(await this.homeSelector.addToCartBtn.first().textContent())
