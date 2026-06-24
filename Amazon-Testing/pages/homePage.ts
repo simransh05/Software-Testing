@@ -1,5 +1,7 @@
-import { expect, Page, Locator } from "@playwright/test"
+import { expect, Page } from "@playwright/test"
 import { homeSelector } from "../selectors/homeSelector"
+import { logger } from "../logs/logger"
+
 export class homePage {
     page: Page
     homeSelector: homeSelector
@@ -9,6 +11,7 @@ export class homePage {
     }
     async goToHomeAndLoad() {
         await this.page.goto('https://www.amazon.in/');
+        logger.info('Home Page')
         await expect(this.page).toHaveURL(/amazon/)
     }
 
@@ -33,10 +36,15 @@ export class homePage {
     }
 
     async cartCountMoreThan0() {
+        // for whole page
+        await this.page.screenshot({ path: 'screenshot/home-page.png' })
         await expect(this.homeSelector.menuCount).toHaveText('1');
     }
 
     async gotoCartAndVerifyReach() {
+        await this.homeSelector.navCart.isVisible();
+        // screenshot of element
+        await this.homeSelector.navCart.screenshot({ path: 'screenshot/cart.png' })
         await this.homeSelector.navCart.click();
         await expect(this.page).toHaveURL(/cart/);
     }
