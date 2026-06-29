@@ -3,28 +3,55 @@ const url = {
 }
 
 const userInfo = {
-    validSingupUser: {
-        username: '',
-        password: ''
+    validSignupUser: {
+        username: 'simrann',
+        password: '123456'
     },
     invalidSignupUser: [
         {
+            username: 'simrann',
+            password: '123456',
+            type: 'Exist User'
+        },
+        {
             username: '',
-            password: '',
-            type: ''
+            password: '123456',
+            type: 'empty field'
+        },
+        {
+            username: 'simrann',
+            password: '123456',
+            type: 'empty field'
         },
     ],
     validLoginUser: {
-        username: '',
-        password: ''
+        username: 'simrann',
+        password: '123456'
     },
     invalidLoginUser: [
         {
+            username: 'krt',
+            password: '123456',
+            type: 'Non existing'
+        },
+        {
             username: '',
+            password: '123456',
+            type: 'empty field'
+        },
+        {
+            username: 'krt',
             password: '',
-            type: ''
+            type: 'empty field'
         },
     ]
 }
 
-export { url, userInfo };
+const messages = {
+    successSignup: 'Sign up successful.',
+    existUserSignup: 'This user already exist.',
+    fillFields: 'Please fill out Username and Password.',
+    nonexistUserLogin: 'Wrong password.'
+}
+
+export { url, userInfo, messages };

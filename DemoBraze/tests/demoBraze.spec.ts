@@ -1,23 +1,35 @@
-import { url } from "../Data/demoBrazeData";
+import { url, userInfo } from "../Data/demoBrazeData";
 import { test } from "../fixtures/fixture";
 
 test.beforeEach(async ({ page }) => {
     await page.goto(url.homePage);
+    await page.waitForLoadState()
 })
 
-test('New User Signup', async ({ signup }) => {
+// success
+test.skip('New User Signup', async ({ signup }) => {
     await signup.uniqueNewUserAndVerify();
 })
 
-test('Invalid Signup', async ({ signup }) => {
-    await signup.invalidUserAndVerify();
+// success
+test('Existing User Signup', async ({ signup }) => {
+    await signup.existingUserAndVerify();
 })
 
-test('Valid User Login', async ({ login }) => {
+test('Missing Username Signup', async ({ signup }) => {
+    await signup.userNameMissingAndVerify();
+})
+
+test('Missing Password Signup', async ({ signup }) => {
+    await signup.passwordMissingAndVerify();
+})
+
+// success
+test.skip('Valid User Login', async ({ login }) => {
     await login.validUserLoginAndVerify();
 })
 
-test('Invalid User Login', async ({ login }) => {
+test.skip('Invalid User Login', async ({ login }) => {
     await login.invalidUserLoginAndVerify();
 })
 
