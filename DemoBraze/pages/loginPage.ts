@@ -25,11 +25,46 @@ export class loginPage {
         await expect(this.loginSelector.logoutBtn).toBeVisible({ timeout: 15_000 });
     }
 
-    async invalidUserLoginAndVerify() {
-        for (let user of userInfo.invalidLoginUser) {
-            await this.loginSelector.username.fill(user.username);
-            await this.loginSelector.password.fill(user.password);
-        }
+    async nonExistingUserLoginAndVerify() {
+        await this.loginSelector.loginModalOpen.click();
+        expect(this.loginSelector.loginModal).toContainClass('show', { timeout: 15_000 });
+        console.log(userInfo.validLoginUser.username, userInfo.validLoginUser.password)
+        console.log(await this.loginSelector.username.getAttribute('type'))
+        await this.loginSelector.username.fill(userInfo.invalidLoginUser[0].username);
+        await this.loginSelector.password.fill(userInfo.invalidLoginUser[0].password);
+        this.page.on('dialog', async dialog => {
+            expect(dialog.message()).toBe(messages.nonexistUserLogin)
+            await dialog.accept();
+        })
+        await this.loginSelector.loginBtn.nth(2).click();
+    }
+
+    async missingUsernameLoginAndVerify() {
+        await this.loginSelector.loginModalOpen.click();
+        expect(this.loginSelector.loginModal).toContainClass('show', { timeout: 15_000 });
+        console.log(userInfo.validLoginUser.username, userInfo.validLoginUser.password)
+        console.log(await this.loginSelector.username.getAttribute('type'))
+        await this.loginSelector.username.fill(userInfo.invalidLoginUser[1].username);
+        await this.loginSelector.password.fill(userInfo.invalidLoginUser[1].password);
+        this.page.on('dialog', async dialog => {
+            expect(dialog.message()).toBe(messages.fillFields)
+            await dialog.accept();
+        })
+        await this.loginSelector.loginBtn.nth(2).click();
+    }
+
+    async missingPasswordLoginAndVerify() {
+        await this.loginSelector.loginModalOpen.click();
+        expect(this.loginSelector.loginModal).toContainClass('show', { timeout: 15_000 });
+        console.log(userInfo.validLoginUser.username, userInfo.validLoginUser.password)
+        console.log(await this.loginSelector.username.getAttribute('type'))
+        await this.loginSelector.username.fill(userInfo.invalidLoginUser[2].username);
+        await this.loginSelector.password.fill(userInfo.invalidLoginUser[2].password);
+        this.page.on('dialog', async dialog => {
+            expect(dialog.message()).toBe(messages.fillFields)
+            await dialog.accept();
+        })
+        await this.loginSelector.loginBtn.nth(2).click();
     }
 
 }
