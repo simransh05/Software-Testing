@@ -20,12 +20,12 @@ const userInfo = {
         },
         {
             username: 'simrann',
-            password: '123456',
+            password: '',
             type: 'empty field'
         },
     ],
     validLoginUser: {
-        username: 'simrann',
+        username: 'kirtii',
         password: '123456'
     },
     invalidLoginUser: [
@@ -47,11 +47,33 @@ const userInfo = {
     ]
 }
 
+const orderInfo = {
+    validInfo: {
+        name: 's',
+        country: 's',
+        city: 's',
+        creditCard: 's',
+        month: 's',
+        year: 's'
+    },
+    invalidInfo: [
+        {
+            name: '',
+            country: '',
+            city: '',
+            creditCard: '',
+            month: '',
+            year: ''
+        },
+    ]
+}
+
 const messages = {
     successSignup: 'Sign up successful.',
     existUserSignup: 'This user already exist.',
     fillFields: 'Please fill out Username and Password.',
-    nonexistUserLogin: 'Wrong password.'
+    nonexistUserLogin: 'Wrong password.',
+    addToCart: 'Product added.'
 }
 
-export { url, userInfo, messages };
+export { url, userInfo, messages, orderInfo };
