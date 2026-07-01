@@ -3,7 +3,7 @@ import { test } from "../fixtures/fixture";
 
 test.beforeEach(async ({ page }) => {
     await page.goto(url.homePage);
-    await page.setViewportSize({width : 1200 , height : 8000})
+    // await page.setViewportSize({width : 1200 , height : 8000})
     await page.waitForLoadState()
 })
 
@@ -47,11 +47,16 @@ test.skip('Missing Password Login', async ({ login }) => {
 })
 
 // end - end testing
-test('Complete App Testing', async ({ page, login, home, cart }) => {
+test.skip('Complete App Testing', async ({ page, login, home, cart }) => {
     await login.validUserLoginAndVerify();
     await home.addToCardAndVerify();
     await cart.gotocartAndVerify();
     await page.reload()
     await cart.verifyCartItems(1);
     await cart.placeOrderAndConfirm();
+})
+
+test('Missing Fields While Purchase', async ({cart})=>{
+    await cart.gotocartAndVerify();
+    await cart.missingFieldWhilePurchase();
 })

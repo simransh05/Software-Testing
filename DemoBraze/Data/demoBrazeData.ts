@@ -59,11 +59,21 @@ const orderInfo = {
     invalidInfo: [
         {
             name: '',
-            country: '',
-            city: '',
+            country: 's',
+            city: 's',
+            creditCard: 's',
+            month: 's',
+            year: 's',
+            type: 'Missing Field'
+        },
+        {
+            name: 's',
+            country: 's',
+            city: 's',
             creditCard: '',
-            month: '',
-            year: ''
+            month: 's',
+            year: 's',
+            type: 'Missing Field'
         },
     ]
 }
@@ -73,7 +83,8 @@ const messages = {
     existUserSignup: 'This user already exist.',
     fillFields: 'Please fill out Username and Password.',
     nonexistUserLogin: 'Wrong password.',
-    addToCart: 'Product added.'
+    addToCart: 'Product added.',
+    requiredFields: 'Please fill out Name and Creditcard.'
 }
 
 export { url, userInfo, messages, orderInfo };

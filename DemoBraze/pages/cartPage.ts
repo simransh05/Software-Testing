@@ -1,6 +1,6 @@
 import { expect, Page } from "playwright/test";
 import { cartSelector } from "../selectors/cartSelector";
-import { orderInfo } from "../Data/demoBrazeData";
+import { messages, orderInfo } from "../Data/demoBrazeData";
 
 export class cartPage {
     page: Page
@@ -23,7 +23,7 @@ export class cartPage {
 
     async placeOrderAndConfirm() {
         await this.page.waitForLoadState('load', { timeout: 15_000 })
-        await this.page.waitForTimeout(5_000)
+        // await this.page.waitForTimeout(5_000)
         await this.cartSelector.placeOrderBtn.click();
         await expect(this.cartSelector.orderModal).toContainClass('show');
         await this.cartSelector.name.fill(orderInfo.validInfo.name);
@@ -35,10 +35,31 @@ export class cartPage {
         await this.cartSelector.purchaseBtn.waitFor({ state: 'visible', timeout: 15_000 })
         await expect(this.cartSelector.purchaseBtn).toBeVisible()
         await this.cartSelector.purchaseBtn.scrollIntoViewIfNeeded()
-        await this.page.pause()
+        // await this.page.pause()
         await this.cartSelector.purchaseBtn.click();
-        await expect(this.cartSelector.confirmBtn).toBeVisible();
+        await this.page.waitForTimeout(500);
+        await expect(this.cartSelector.confirmBtn).toBeVisible({ timeout: 15_000 });
         await this.cartSelector.confirmBtn.click();
         await expect(this.page).toHaveURL(/index/, { timeout: 15_000 })
+    }
+
+    async missingFieldWhilePurchase() {
+        await this.page.waitForLoadState('load', { timeout: 15_000 })
+        // await this.page.waitForTimeout(5_000)
+        await this.cartSelector.placeOrderBtn.click();
+        await expect(this.cartSelector.orderModal).toContainClass('show');
+        for (let pur of orderInfo.invalidInfo) {
+            await this.cartSelector.name.fill(pur.name);
+            await this.cartSelector.country.fill(pur.country)
+            await this.cartSelector.city.fill(pur.city);
+            await this.cartSelector.creditCard.fill(pur.creditCard);
+            await this.cartSelector.month.fill(pur.month);
+            await this.cartSelector.year.fill(pur.year);
+            this.page.once('dialog', async dialog => {
+                expect(dialog.message()).toBe(messages.requiredFields)
+                await dialog.accept();
+            })
+            await this.cartSelector.purchaseBtn.click();
+        }
     }
 }
