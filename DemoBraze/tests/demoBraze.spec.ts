@@ -47,16 +47,23 @@ test.skip('Missing Password Login', async ({ login }) => {
 })
 
 // end - end testing
-test.skip('Complete App Testing', async ({ page, login, home, cart }) => {
+test('Complete App Testing', async ({ page, login, home, cart }) => {
     await login.validUserLoginAndVerify();
     await home.addToCardAndVerify();
     await cart.gotocartAndVerify();
-    await page.reload()
     await cart.verifyCartItems(1);
     await cart.placeOrderAndConfirm();
+    await home.logoutAndVerify();
 })
 
-test('Missing Fields While Purchase', async ({cart})=>{
+test.skip('Missing Fields While Purchase', async ({ cart }) => {
     await cart.gotocartAndVerify();
     await cart.missingFieldWhilePurchase();
+})
+
+test.skip('DBL Product', async ({ login, home, cart }) => {
+    await login.validUserLoginAndVerify();
+    await home.productClickDBL();
+    await cart.gotocartAndVerify();
+    await cart.verifyCartItems(2);
 })

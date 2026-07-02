@@ -19,4 +19,19 @@ export class homePage {
         })
         await this.homeSelector.addBtn.click();
     }
+
+    async logoutAndVerify() {
+        await this.homeSelector.logoutBtn.click();
+        await expect(this.homeSelector.logoutBtn).toBeHidden();
+    }
+
+    async productClickDBL() {
+        this.homeSelector.card.first().click();
+        await expect(this.page).toHaveURL(/idp/)
+        this.page.on('dialog', async dialog => {
+            expect(dialog.message()).toBe(messages.addToCart);
+            await dialog.accept();
+        })
+        await this.homeSelector.addBtn.dblclick();
+    }
 }
