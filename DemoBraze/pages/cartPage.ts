@@ -2,6 +2,15 @@ import { expect, Page } from "playwright/test";
 import { cartSelector } from "../selectors/cartSelector";
 import { messages, orderInfo } from "../Data/demoBrazeData";
 
+type purchaseDetails = {
+    name: string,
+    country: string,
+    city: string,
+    creditCard: string,
+    month: string,
+    year: string
+}
+
 export class cartPage {
     page: Page
     cartSelector: cartSelector
@@ -21,17 +30,21 @@ export class cartPage {
         expect(count).toBe(total);
     }
 
+    async fillDetails(data: purchaseDetails) {
+        await this.cartSelector.name.fill(data.name);
+        await this.cartSelector.country.fill(data.country)
+        await this.cartSelector.city.fill(data.city);
+        await this.cartSelector.creditCard.fill(data.creditCard);
+        await this.cartSelector.month.fill(data.month);
+        await this.cartSelector.year.fill(data.year);
+    }
+
     async placeOrderAndConfirm() {
         await this.page.waitForLoadState('load', { timeout: 15_000 })
         // await this.page.waitForTimeout(5_000)
         await this.cartSelector.placeOrderBtn.click();
         await expect(this.cartSelector.orderModal).toContainClass('show');
-        await this.cartSelector.name.fill(orderInfo.validInfo.name);
-        await this.cartSelector.country.fill(orderInfo.validInfo.country)
-        await this.cartSelector.city.fill(orderInfo.validInfo.city);
-        await this.cartSelector.creditCard.fill(orderInfo.validInfo.creditCard);
-        await this.cartSelector.month.fill(orderInfo.validInfo.month);
-        await this.cartSelector.year.fill(orderInfo.validInfo.year);
+        await this.fillDetails(orderInfo.validInfo)
         await this.cartSelector.purchaseBtn.waitFor({ state: 'visible', timeout: 15_000 })
         await expect(this.cartSelector.purchaseBtn).toBeVisible()
         await this.cartSelector.purchaseBtn.scrollIntoViewIfNeeded()
@@ -49,12 +62,7 @@ export class cartPage {
         await this.cartSelector.placeOrderBtn.click();
         await expect(this.cartSelector.orderModal).toContainClass('show');
         for (let pur of orderInfo.invalidInfo) {
-            await this.cartSelector.name.fill(pur.name);
-            await this.cartSelector.country.fill(pur.country)
-            await this.cartSelector.city.fill(pur.city);
-            await this.cartSelector.creditCard.fill(pur.creditCard);
-            await this.cartSelector.month.fill(pur.month);
-            await this.cartSelector.year.fill(pur.year);
+            await this.fillDetails(pur);
             this.page.once('dialog', async dialog => {
                 expect(dialog.message()).toBe(messages.requiredFields)
                 await dialog.accept();
