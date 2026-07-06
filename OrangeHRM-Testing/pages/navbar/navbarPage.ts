@@ -9,54 +9,76 @@ export class navbarPage {
         this.navbar = new navbarSelector(page);
     }
 
-    async searchAndVerifyFilter() { }
+    async searchAndVerifyFilter(value: string) {
+        await this.page.waitForLoadState('load', { timeout: 60_000 })
+        await expect(this.navbar.allMenuItem.first()).toBeVisible({ timeout: 10_000 })
+        const beforeCount = await this.navbar.allMenuItem.count();
+        console.log(await this.navbar.allMenuItem.allInnerTexts());
+        await this.navbar.searchInput.fill(value);
+        const afterCount = await this.navbar.allMenuItem.count();
+        console.log(beforeCount, afterCount);
+        expect(beforeCount).toBeGreaterThan(afterCount)
+    }
 
     async navToAdminAndVerify() {
-        this.navbar.allMenuItem.nth(0).click();
+        await this.navbar.allMenuItem.nth(0).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
+        console.log(await this.navbar.allMenuItem.count())
         await expect(this.page).toHaveURL(/view/);
     }
     async navToPIMAndVerify() {
-        this.navbar.allMenuItem.nth(1).click();
+        await this.navbar.allMenuItem.nth(1).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.page).toHaveURL(/view/);
     }
     async navToLeaveAndVerify() {
-        this.navbar.allMenuItem.nth(2).click();
+        await this.navbar.allMenuItem.nth(2).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.page).toHaveURL(/view/);
     }
     async navToTimeAndVerify() {
-        this.navbar.allMenuItem.nth(3).click();
+        await this.navbar.allMenuItem.nth(3).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.page).toHaveURL(/view/);
     }
     async navToRecruiteAndVerify() {
-        this.navbar.allMenuItem.nth(4).click();
+        await this.navbar.allMenuItem.nth(4).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.page).toHaveURL(/view/);
     }
     async navToUserInfoAndVerify() {
-        this.navbar.allMenuItem.nth(5).click();
+        await this.navbar.allMenuItem.nth(5).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.page).toHaveURL(/view/);
     }
     async navToPerformanceAndVerify() {
-        this.navbar.allMenuItem.nth(6).click();
+        await this.navbar.allMenuItem.nth(6).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.page).toHaveURL(/view/);
     }
     async navToDashboardAndVerify() {
-        this.navbar.allMenuItem.nth(7).click();
-        await expect(this.page).toHaveURL(/view/);
+        await this.navbar.allMenuItem.nth(7).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
+        await expect(this.page).toHaveURL(/index/);
     }
     async navToDirectoryAndVerify() {
-        this.navbar.allMenuItem.nth(8).click();
+        await this.navbar.allMenuItem.nth(8).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.page).toHaveURL(/view/);
     }
     async navToMaintenanceAndVerify() {
-        this.navbar.allMenuItem.nth(9).click();
-        await expect(this.page).toHaveURL(/view/);
+        await this.navbar.allMenuItem.nth(9).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
+        await expect(this.page).toHaveURL(/Employee/);
     }
     async navToClaimAndVerify() {
-        this.navbar.allMenuItem.nth(10).click();
+        await this.navbar.allMenuItem.nth(10).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.page).toHaveURL(/view/);
     }
     async navToBuzzAndVerify() {
-        this.navbar.allMenuItem.nth(11).click();
+        await this.navbar.allMenuItem.nth(11).click();
+        this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.page).toHaveURL(/view/);
     }
 

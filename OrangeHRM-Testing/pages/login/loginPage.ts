@@ -20,6 +20,7 @@ export class loginPage {
         await this.loginSelector.username.pressSequentially(data.loginInfo.validUser.username);
         await this.loginSelector.password.pressSequentially(data.loginInfo.validUser.password);
         await this.loginSelector.loginBtn.click();
+        await this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.page).toHaveURL(/dashboard/)
     }
 
