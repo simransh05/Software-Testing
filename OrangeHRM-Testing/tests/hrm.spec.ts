@@ -6,12 +6,12 @@ test.beforeEach('Login Valid User', async ({ login, page }) => {
   await page.waitForLoadState('load', { timeout: 120_000 })
 })
 
-// test('Login Invalid User', async ({ login }) => {
-//   await login.gotoOrangeHRMLogin();
-//   await login.loginForInvalidUser();
-// })
+test.skip('Login Invalid User', async ({ login }) => {
+  await login.gotoOrangeHRMLogin();
+  await login.loginForInvalidUser();
+})
 
-test('Verify Navigations', async ({ navbar }) => {
+test.skip('Verify Navigations', async ({ navbar }) => {
   // await navbar.navToAdminAndVerify();
   // await navbar.navToPIMAndVerify();
   // await navbar.navToLeaveAndVerify();
@@ -26,3 +26,5 @@ test('Verify Navigations', async ({ navbar }) => {
   // await navbar.navToBuzzAndVerify();
   await navbar.searchAndVerifyFilter('b');
 })
+
+test('admin', async ({ userMgt }) => { })
