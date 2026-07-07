@@ -1,11 +1,11 @@
 import { test as base } from '@playwright/test'
 import { loginPage } from '../pages/login/loginPage';
 import { navbarPage } from '../pages/navbar/navbarPage';
-import { adminPage } from '../pages/admin/adminPage';
+import { userManagementPage } from '../pages/admin/userManagementPage';
 type myFixture = {
     login: loginPage,
     navbar: navbarPage,
-    admin: adminPage
+    userMgt: userManagementPage
 }
 export const test = base.extend<myFixture>({
     login: async ({ page }, use) => {
@@ -14,7 +14,7 @@ export const test = base.extend<myFixture>({
     navbar: async ({ page }, use) => {
         await use(new navbarPage(page));
     },
-    admin: async ({ page }, use) => {
-        await use(new adminPage(page));
+    userMgt: async ({ page }, use) => {
+        await use(new userManagementPage(page));
     },
 })
