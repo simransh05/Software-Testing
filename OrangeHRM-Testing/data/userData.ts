@@ -39,6 +39,45 @@ const data = {
                 password: '',
                 dataType: 'bothEmpty'
             }],
+    },
+    AddUser: {
+        validUserInfo: {
+            userRole: '',
+            empName: '',
+            status: '',
+            username: '',
+            password: '',
+            confirmPass: ''
+        },
+        invalidUserInfo: [
+            {
+                userRole: '',
+                empName: '',
+                status: '',
+                username: '',
+                password: '',
+                confirmPass: '',
+                type: ''
+            },
+            {
+                userRole: '',
+                empName: '',
+                status: '',
+                username: '',
+                password: '',
+                confirmPass: '',
+                type :''
+            },
+            {
+                userRole: '',
+                empName: '',
+                status: '',
+                username: '',
+                password: '',
+                confirmPass: '',
+                type :'empty '
+            },
+        ]
     }
 }
 
@@ -46,4 +85,9 @@ const url = {
     loginPageURL: 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login'
 }
 
-export { data, url };
+
+const msg = {
+    toastMsg: 'No Records Found'
+}
+
+export { data, url, msg };

@@ -27,4 +27,7 @@ test.skip('Verify Navigations', async ({ navbar }) => {
   await navbar.searchAndVerifyFilter('b');
 })
 
-test('admin', async ({ userMgt }) => { })
+test('admin', async ({ navbar , userMgt }) => {
+  await navbar.navToAdminAndVerify();
+  await userMgt.resetFilterAndVerify();
+})
