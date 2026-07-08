@@ -23,7 +23,7 @@ export class navbarPage {
     async navToAdminAndVerify() {
         await this.navbar.allMenuItem.nth(0).click();
         this.page.waitForLoadState('load', { timeout: 60_000 })
-        console.log(await this.navbar.allMenuItem.count())
+        // console.log(await this.navbar.allMenuItem.count())
         await expect(this.page).toHaveURL(/view/);
     }
     async navToPIMAndVerify() {
