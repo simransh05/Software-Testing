@@ -13,6 +13,14 @@ export class userManagementSelectors {
     searchBtn: Locator
     addBtn: Locator
     option1:Locator
+    select :Locator
+    addInputFields : Locator
+    saveBtn : Locator
+    selectempName : Locator
+    deleteBtn  :Locator
+    editBtn : Locator
+    confirmBtn :Locator
+    pageLoad  : Locator
     constructor(page: Page) {
         this.page = page
         this.container = page.locator('oxd-table-body')
@@ -26,5 +34,13 @@ export class userManagementSelectors {
         this.searchBtn = page.locator('.orangehrm-left-space')
         this.addBtn = page.locator('.oxd-button-icon');
         this.option1 = page.locator('.oxd-select-option')
+        this.select = page.locator('.oxd-select-text--after')
+        this.addInputFields = page.getByRole('textbox');
+        this.saveBtn = page.locator('.orangehrm-left-space')
+        this.selectempName = page.locator('.oxd-autocomplete-option');
+        this.deleteBtn = page.locator('.bi-trash');
+        this.editBtn = page.locator('.bi-pencil-fill')
+        this.confirmBtn = page.locator('.oxd-button--label-danger');
+        this.pageLoad = page.locator('.oxd-table-loader')
     }
 }
