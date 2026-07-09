@@ -42,40 +42,32 @@ const data = {
     },
     AddUser: {
         validUserInfo: {
-            userRole: '',
-            empName: '',
-            status: '',
-            username: '',
-            password: '',
-            confirmPass: ''
+            empName: 'kirti sharma',
+            username: 'kirtiSharma',
+            password: 'Aa@12345@',
+            confirmPass: 'Aa@12345@'
         },
         invalidUserInfo: [
             {
-                userRole: '',
                 empName: '',
-                status: '',
                 username: '',
                 password: '',
                 confirmPass: '',
                 type: ''
             },
             {
-                userRole: '',
                 empName: '',
-                status: '',
                 username: '',
                 password: '',
                 confirmPass: '',
-                type :''
+                type: ''
             },
             {
-                userRole: '',
                 empName: '',
-                status: '',
                 username: '',
                 password: '',
                 confirmPass: '',
-                type :'empty '
+                type: 'empty '
             },
         ]
     }

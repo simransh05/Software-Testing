@@ -27,7 +27,18 @@ test.skip('Verify Navigations', async ({ navbar }) => {
   await navbar.searchAndVerifyFilter('b');
 })
 
-test('admin', async ({ navbar , userMgt }) => {
+test('Admin User Management', async ({ navbar, userMgt }) => {
+  // add - filter from each - reset - update - delete
   await navbar.navToAdminAndVerify();
+  await userMgt.addNewUserAndVerify();
+  await userMgt.filterSystemUserByUsernameAndVerify();
   await userMgt.resetFilterAndVerify();
+  await userMgt.filterSystemUserByRoleAndVerify();
+  await userMgt.resetFilterAndVerify();
+  await userMgt.filterSystemUserByEmpNameAndVerify();
+  await userMgt.resetFilterAndVerify();
+  await userMgt.filterSystemUserByStatus();
+  await userMgt.resetFilterAndVerify();
+  await userMgt.updateTheInfoAndVerify();
+  await userMgt.deleteSysetmUserAndVerify();
 })
