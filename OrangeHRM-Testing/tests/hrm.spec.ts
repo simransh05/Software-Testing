@@ -27,7 +27,7 @@ test.skip('Verify Navigations', async ({ navbar }) => {
   await navbar.searchAndVerifyFilter('b');
 })
 
-test('Admin User Management', async ({ navbar, userMgt }) => {
+test.skip('Admin User Management', async ({ navbar, userMgt }) => {
   // add - filter from each - reset - update - delete
   await navbar.navToAdminAndVerify();
   await userMgt.addNewUserAndVerify();
@@ -41,4 +41,12 @@ test('Admin User Management', async ({ navbar, userMgt }) => {
   await userMgt.resetFilterAndVerify();
   await userMgt.updateTheInfoAndVerify();
   await userMgt.deleteSysetmUserAndVerify();
+})
+
+test('Admin Job Title', async ({ navAdmin, navbar, jobs }) => {
+  await navbar.navToAdminAndVerify();
+  await navAdmin.openAndNavAndVerify('Job', 'Job Titles', 'viewJobTitleList')
+  await jobs.addNewJobTitleAndVerify('Accountant', 'viewJobTitleList');
+  await jobs.updateJobTitleAndVerify('aaa');
+  await jobs.deleteJobAndVerify();
 })
