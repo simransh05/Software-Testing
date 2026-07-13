@@ -13,11 +13,11 @@ export class userManagementPage {
 
     async addNewUserAndVerify() {
         await this.userMgt.addBtn.click();
-        await expect(this.page).toHaveURL(/saveSystemUser/)
+        await expect(this.page).toHaveURL(/saveSystemUser/, { timeout: 15_000 })
         await this.userMgt.select.nth(0).click();
         await this.userMgt.option1.nth(1).click();
         await this.userMgt.employeeName.fill(data.AddUser.validUserInfo.empName);
-        await this.page.waitForTimeout(5000)
+        await expect(this.userMgt.optionsOfName(data.AddUser.validUserInfo.empName)).toBeVisible({ timeout: 15_000 })
         await expect(this.userMgt.selectempName).toBeVisible({ timeout: 15_000 })
         await this.userMgt.selectempName.click();
         await this.userMgt.select.nth(1).click();
@@ -26,18 +26,18 @@ export class userManagementPage {
         await this.userMgt.addInputFields.nth(3).fill(data.AddUser.validUserInfo.password);
         await this.userMgt.addInputFields.nth(4).fill(data.AddUser.validUserInfo.confirmPass);
         await this.userMgt.saveBtn.click();
-        await expect(this.page).toHaveURL(/viewSystemUsers/)
+        await expect(this.page).toHaveURL(/viewSystemUsers/, { timeout: 15_000 })
     }
 
     async updateTheInfoAndVerify() {
         // find then update any field then check if updated 
         await this.filterSystemUserByEmpNameAndVerify();
         await this.userMgt.editBtn.click();
-        await expect(this.page).toHaveURL(/saveSystemUser/);
+        await expect(this.page).toHaveURL(/saveSystemUser/, { timeout: 15_000 });
         await this.userMgt.select.nth(1).click();
         await this.userMgt.option1.nth(2).click();
         await this.userMgt.saveBtn.click();
-        await expect(this.page).toHaveURL(/viewSystemUsers/)
+        await expect(this.page).toHaveURL(/viewSystemUsers/, { timeout: 15_000 })
     }
 
     async deleteSysetmUserAndVerify() {
@@ -75,7 +75,7 @@ export class userManagementPage {
     }
     async filterSystemUserByEmpNameAndVerify() {
         await this.userMgt.employeeName.fill(data.AddUser.validUserInfo.empName);
-        await this.page.waitForTimeout(2000)
+        await expect(this.userMgt.optionsOfName(data.AddUser.validUserInfo.empName)).toBeVisible({ timeout: 15_000 });
         await expect(this.userMgt.selectempName).toBeVisible({ timeout: 15_000 })
         await this.userMgt.selectempName.click();
         await this.userMgt.searchBtn.click();
