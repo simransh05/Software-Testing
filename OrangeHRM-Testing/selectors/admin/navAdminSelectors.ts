@@ -6,11 +6,11 @@ export class navAdminSelectors {
         this.page = page
     }
 
-    menuItem(name: string): Locator {
-        return this.page.getByRole('menuitem').getByText(name);
+    openMenu(name: string): Locator {
+        return this.page.locator('.oxd-topbar-body-nav-tab-item').filter({ hasText: name });
     }
 
-    openMenu(name: string): Locator {
-        return this.page.locator('.oxd-topbar-body-nav-tab-item', { hasText: name });
+    menuItem(name: string): Locator {
+        return this.page.locator('.oxd-topbar-body-nav-tab-link', { hasText: name });
     }
 }

@@ -12,15 +12,15 @@ export class userManagementSelectors {
     tableValue: Locator
     searchBtn: Locator
     addBtn: Locator
-    option1:Locator
-    select :Locator
-    addInputFields : Locator
-    saveBtn : Locator
-    selectempName : Locator
-    deleteBtn  :Locator
-    editBtn : Locator
-    confirmBtn :Locator
-    pageLoad  : Locator
+    option1: Locator
+    select: Locator
+    addInputFields: Locator
+    saveBtn: Locator
+    selectempName: Locator
+    deleteBtn: Locator
+    editBtn: Locator
+    confirmBtn: Locator
+    pageLoad: Locator
     constructor(page: Page) {
         this.page = page
         this.container = page.locator('oxd-table-body')
@@ -42,5 +42,9 @@ export class userManagementSelectors {
         this.editBtn = page.locator('.bi-pencil-fill')
         this.confirmBtn = page.locator('.oxd-button--label-danger');
         this.pageLoad = page.locator('.oxd-table-loader')
+    }
+
+    optionsOfName(name: string): Locator {
+        return this.page.getByRole('option').filter({ hasText: name });
     }
 }
