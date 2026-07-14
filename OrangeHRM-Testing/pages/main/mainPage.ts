@@ -10,12 +10,30 @@ export class mainPage {
         this.main = new mainSelectors(page);
     }
 
-    async add() { }
+    async add(name: string, url: string) {
+        const before = await this.main.numberOfRecords.textContent();
+        const beforeNum = before?.match(/\d+/)![0]
+        await this.main.addBtn.click();
+        await this.main.inputField.first().fill(name);
+        await this.main.saveBtn.click();
+        await expect(this.main.pageLoad).toBeHidden({ timeout: 20_000 })
+        await expect(this.page).toHaveURL(new RegExp(url), { timeout: 15_000 });
+        const after = await this.main.numberOfRecords.textContent()
+        const afterNum = after?.match(/\d+/)![0]
+        console.log('here', beforeNum, afterNum);
+        expect(Number(afterNum)).toBeGreaterThan(Number(beforeNum));
+    }
 
-    async update(name: string, url: string) {
+    async update(name: string, url: string, update: string) {
         // name is the filter name
-        console.log(this.main.row(name))
+        this.page.waitForLoadState('load', { timeout: 60_000 })
+        console.log(this.main.row(name), update)
         await this.main.editBtn(name).click();
+        console.log('1', await this.main.inputField.first().inputValue(), await this.main.inputField.count())
+        await this.main.inputField.first().clear();
+        console.log('2', await this.main.inputField.first().inputValue())
+        await this.main.inputField.first().fill(update);
+        console.log('3', await this.main.inputField.first().inputValue())
         await this.main.saveBtn.click();
         await expect(this.main.pageLoad).toBeHidden({ timeout: 15_000 })
         await expect(this.page).toHaveURL(new RegExp(url), { timeout: 20000 })
