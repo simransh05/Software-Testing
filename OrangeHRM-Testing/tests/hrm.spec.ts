@@ -1,7 +1,7 @@
 import { data, url } from "../data/userData";
 import { test } from "../fixtures/fixture";
 
-test.beforeEach('basePage.login Valid User', async ({ basePage, page }) => {
+test.beforeEach('login Valid User', async ({ basePage, page }) => {
   await basePage.login.gotoOrangeHRMLogin();
   await basePage.login.loginValidUser();
   await page.waitForLoadState('load', { timeout: 120_000 })
@@ -44,24 +44,45 @@ test.skip('Admin User Management', async ({ basePage }) => {
   await basePage.userMgt.deleteSysetmUserAndVerify();
 })
 
-test('Admin Job Title', async ({ basePage, page }) => {
+test.describe('Job', () => {
+  test('Job Title', async ({ basePage }) => {
+    await basePage.navbar.navToAdminAndVerify();
+    await basePage.navAdmin.openAndNavAndVerify('viewJobTitleList', 'Job', 'Job Titles')
+    await basePage.main.add('Accountant', 'viewJobTitleList');
+    await basePage.main.update('Accountant', 'viewJobTitleList', 'Accounts');
+    await basePage.main.delete('Accounts');
+  })
+  test('Pay Grades', async ({ basePage }) => {
+    await basePage.navbar.navToAdminAndVerify();
+    await basePage.navAdmin.openAndNavAndVerify('viewPayGrades', 'Job', 'Pay Grades')
+    await basePage.jobs.addNewPayGradesAndVerify('Grade I', url.payGrades);
+    await basePage.jobs.updatePayGradesAndVerify('Grade I', 'Grades I', url.payGrades);
+    await basePage.main.delete('Grades I');
+  })
+  test('Employment Status', async ({ basePage }) => {
+    await basePage.navbar.navToAdminAndVerify();
+    await basePage.navAdmin.openAndNavAndVerify('employmentStatus', 'Job', 'Employment Status')
+    await basePage.main.add('Full Time QA', 'employmentStatus')
+    await basePage.main.update('Full Time QA', 'employmentStatus', 'Part Time QA');
+    await basePage.main.delete('Part Time QA');
+  })
+  test('Job Categories', async ({ basePage }) => {
+    await basePage.navbar.navToAdminAndVerify();
+    await basePage.navAdmin.openAndNavAndVerify('jobCategory', 'Job', 'Job Categories')
+    await basePage.main.add('HR Manager', 'jobCategory')
+    await basePage.main.update('HR Manager', 'jobCategory', 'QA Manager');
+    await basePage.main.delete('QA Manager');
+  })
+  test('Work Shifts', async ({ basePage }) => {
+    await basePage.navbar.navToAdminAndVerify();
+    await basePage.navAdmin.openAndNavAndVerify('workShift', 'Job', 'Work Shifts')
+    await basePage.main.add('Day Shift', 'workShift')
+    await basePage.main.update('Day Shift', 'workShift', 'Mon-Fri');
+    await basePage.main.delete('Mon-Fri');
+  })
+})
+
+test('Admin Organization', async ({ basePage }) => {
   await basePage.navbar.navToAdminAndVerify();
-  await basePage.navAdmin.openAndNavAndVerify('Job', 'Job Titles', 'viewJobTitleList')
-  await basePage.main.add('Accountant', 'viewJobTitleList');
-  await basePage.main.update('Accountant', 'viewJobTitleList', 'Accounts');
-  await basePage.main.delete('Accounts');
-  await basePage.navAdmin.openAndNavAndVerify('Job', 'Pay Grades', 'viewPayGrades')
-  await basePage.main.delete('Grades I');
-  await basePage.navAdmin.openAndNavAndVerify('Job', 'Employment Status', 'employmentStatus')
-  await basePage.main.add('Full Time QA', 'employmentStatus')
-  await basePage.main.update('Full Time QA', 'employmentStatus', 'Part Time QA');
-  await basePage.main.delete('Part Time QA');
-  await basePage.navAdmin.openAndNavAndVerify('Job', 'Job Categories', 'jobCategory')
-  await basePage.main.add('HR Manager', 'jobCategory')
-  await basePage.main.update('HR Manager', 'jobCategory', 'QA Manager');
-  await basePage.main.delete('QA Manager');
-  await basePage.navAdmin.openAndNavAndVerify('Job', 'Work Shifts', 'workShift')
-  await basePage.main.add('Day Shift', 'workShift')
-  await basePage.main.update('Day Shift', 'workShift', 'Mon-Fri');
-  await basePage.main.delete('Mon-Fri');
+  await basePage.navAdmin.openAndNavAndVerify('viewOrganizationGeneralInformation', 'Organization', 'General Information')
 })

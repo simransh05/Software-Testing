@@ -9,9 +9,11 @@ export class navAdminPage {
         this.navAdmin = new navAdminSelectors(page);
     }
 
-    async openAndNavAndVerify(menu: string, submenu: string, url: string) {
+    async openAndNavAndVerify(url: string, menu: string, submenu?: string) {
         await this.navAdmin.openMenu(menu).click();
-        await this.navAdmin.menuItem(submenu).click();
+        if (submenu) {
+            await this.navAdmin.menuItem(submenu).click();
+        }
         await expect(this.page).toHaveURL(new RegExp(url));
     }
 }

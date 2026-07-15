@@ -17,4 +17,12 @@ export class jobSelectors {
         this.description = page.getByPlaceholder('Type description here')
         this.pageLoad = page.locator('.oxd-table-loader')
     }
+
+    row(name: string): Locator {
+        return this.page.locator('.oxd-table-row').filter({ hasText: name });
+    }
+
+    editBtn(name: string): Locator {
+        return this.row(name).locator('.bi-pencil-fill');
+    }
 }
