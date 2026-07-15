@@ -27,13 +27,14 @@ export class mainPage {
     async update(name: string, url: string, update: string) {
         // name is the filter name
         this.page.waitForLoadState('load', { timeout: 60_000 })
-        console.log(this.main.row(name), update)
+        await expect(this.main.pageLoad).toBeHidden({ timeout: 20_000 })
         await this.main.editBtn(name).click();
-        console.log('1', await this.main.inputField.first().inputValue(), await this.main.inputField.count())
-        await this.main.inputField.first().clear();
-        console.log('2', await this.main.inputField.first().inputValue())
+        await expect(this.main.pageLoad).toBeHidden({ timeout: 20_000 })
+        await expect(this.main.inputField.first()).toBeVisible({ timeout: 20_000 })
+        await this.page.waitForTimeout(2000);
         await this.main.inputField.first().fill(update);
-        console.log('3', await this.main.inputField.first().inputValue())
+        console.log(await this.main.inputField.first().inputValue())
+        expect(await this.main.inputField.first().inputValue()).toBe(update);
         await this.main.saveBtn.click();
         await expect(this.main.pageLoad).toBeHidden({ timeout: 15_000 })
         await expect(this.page).toHaveURL(new RegExp(url), { timeout: 20000 })
