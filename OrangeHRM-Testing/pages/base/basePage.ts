@@ -5,6 +5,7 @@ import { userManagementPage } from "../admin/userManagementPage";
 import { navAdminPage } from "../admin/navAdminPage";
 import { jobPage } from "../admin/jobPage";
 import { mainPage } from "../main/mainPage";
+import { organizationPage } from "../admin/organizationPage";
 
 export class basePage {
     login: loginPage
@@ -13,6 +14,7 @@ export class basePage {
     navAdmin: navAdminPage
     jobs: jobPage
     main: mainPage
+    org : organizationPage
     constructor(page: Page) {
         this.login = new loginPage(page);
         this.navbar = new navbarPage(page);
@@ -20,5 +22,6 @@ export class basePage {
         this.navAdmin = new navAdminPage(page);
         this.jobs = new jobPage(page);
         this.main = new mainPage(page);
+        this.org = new organizationPage(page);
     }
 }
