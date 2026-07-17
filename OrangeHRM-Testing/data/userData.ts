@@ -75,7 +75,8 @@ const data = {
 
 const url = {
     loginPageURL: 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login',
-    payGrades: 'https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewPayGrades'
+    payGrades: 'https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewPayGrades',
+    homepage: 'https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index'
 }
 
 

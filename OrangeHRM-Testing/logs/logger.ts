@@ -11,7 +11,10 @@ export const logger = winston.createLogger({
     transports: [
         new winston.transports.Console(),
         new winston.transports.File({
-            filename: 'logs/app-logs.logs'
+            filename: 'logs/app-logs.logs',
+            options: {
+                flags: 'w'
+            }
         })
     ]
 });

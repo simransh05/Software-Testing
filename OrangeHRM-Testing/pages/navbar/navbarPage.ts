@@ -21,6 +21,7 @@ export class navbarPage {
     }
 
     async navToAdminAndVerify() {
+        await this.page.waitForLoadState('load', { timeout: 60_000 })
         await this.navbar.allMenuItem.nth(0).click();
         this.page.waitForLoadState('load', { timeout: 60_000 })
         // console.log(await this.navbar.allMenuItem.count())

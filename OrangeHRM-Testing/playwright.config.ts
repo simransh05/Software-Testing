@@ -29,6 +29,7 @@ export default defineConfig({
     launchOptions: {
       slowMo: 500,
     },
+    storageState: 'data/user.json',
     /* Base URL to use in actions like `await page.goto('')`. */
     // baseURL: 'http://localhost:3000',
     navigationTimeout: 60_000,
@@ -44,8 +45,13 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'setup auth',
+      testMatch: /auth\.setup\.ts/
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      dependencies: ['setup auth']
     },
 
     // {

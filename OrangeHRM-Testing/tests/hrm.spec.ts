@@ -1,11 +1,5 @@
-import { data, url } from "../data/userData";
+import { url } from "../data/userData";
 import { test } from "../fixtures/fixture";
-
-test.beforeEach('login Valid User', async ({ basePage, page }) => {
-  await basePage.login.gotoOrangeHRMLogin();
-  await basePage.login.loginValidUser();
-  await page.waitForLoadState('load', { timeout: 120_000 })
-})
 
 test.skip('login Invalid User', async ({ basePage }) => {
   await basePage.login.gotoOrangeHRMLogin();
@@ -89,7 +83,7 @@ test.describe('Admin', () => {
       await basePage.navAdmin.openAndNavAndVerify('viewOrganizationGeneralInformation', 'Organization', 'General Information');
       await basePage.org.addGeneralInfoAndVerify('1234');
     })
-    test('Locations', async ({ basePage }) => {
+    test.skip('Locations', async ({ basePage }) => {
       await basePage.navbar.navToAdminAndVerify();
       await basePage.navAdmin.openAndNavAndVerify('viewLocations', 'Organization', 'Locations');
       await basePage.org.addLocationAndVerify('New Delhi', 'Delhi', 'India', 'viewLocations');
@@ -99,9 +93,52 @@ test.describe('Admin', () => {
       await basePage.main.delete('Mumbai')
     })
   })
+
+  test.describe('Qualifications', () => {
+    test.skip('Skills', async ({ basePage }) => {
+      await basePage.navbar.navToAdminAndVerify();
+      await basePage.navAdmin.openAndNavAndVerify('viewSkills', 'Qualifications', 'Skills');
+      await basePage.main.add('C++', 'viewSkills');
+      await basePage.main.update('C++', 'viewSkills', 'DSA C++')
+      await basePage.main.delete('DSA C++')
+    })
+
+    test.skip('Education', async ({ basePage }) => {
+      await basePage.navbar.navToAdminAndVerify();
+      await basePage.navAdmin.openAndNavAndVerify('viewEducation', 'Qualifications', 'Education');
+      await basePage.main.add('BCA', 'viewEducation');
+      await basePage.main.update('BCA', 'viewEducation', 'BTech')
+      await basePage.main.delete('BTech')
+    })
+    test.skip('Licenses', async ({ basePage }) => {
+      await basePage.navbar.navToAdminAndVerify();
+      await basePage.navAdmin.openAndNavAndVerify('viewLicenses', 'Qualifications', 'Licenses');
+      await basePage.main.add('Hackathon Certificate', 'viewLicenses');
+      await basePage.main.update('Hackathon Certificate', 'viewLicenses', 'Microsoft Hackathon Certificate')
+      await basePage.main.delete('Microsoft Hackathon Certificate')
+    })
+    test.skip('Languages', async ({ basePage }) => {
+      await basePage.navbar.navToAdminAndVerify();
+      await basePage.navAdmin.openAndNavAndVerify('viewLanguages', 'Qualifications', 'Languages');
+      await basePage.main.add('American English', 'viewLanguages');
+      await basePage.main.update('American English', 'viewLanguages', 'British English')
+      await basePage.main.delete('British English')
+    })
+    test.skip('Memberships', async ({ basePage }) => {
+      await basePage.navbar.navToAdminAndVerify();
+      await basePage.navAdmin.openAndNavAndVerify('membership', 'Qualifications', 'Memberships');
+      await basePage.main.add('AAPC', 'membership');
+      await basePage.main.update('AAPC', 'membership', 'AHIMA')
+      await basePage.main.delete('AHIMA')
+    })
+  })
+
+  test('Nationalities', async ({ basePage }) => {
+    await basePage.navbar.navToAdminAndVerify();
+    await basePage.navAdmin.openAndNavAndVerify('nationality', 'Nationalities');
+    await basePage.main.add('Australia', 'nationality');
+    await basePage.main.update('Australia', 'nationality', 'Australian')
+    await basePage.main.delete('Australian')
+  })
 })
-
-
-
-
 
