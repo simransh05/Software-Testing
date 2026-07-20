@@ -16,17 +16,14 @@ export class jobPage {
         await expect(this.jobs.pageLoad).toBeHidden({ timeout: 20_000 })
         await this.jobs.inputField.fill(name);
         await this.jobs.saveBtn.click();
-        console.log(await this.jobs.inputField.inputValue())
         expect(await this.jobs.inputField.inputValue()).toBe(name);
         await this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.jobs.pageLoad).toBeHidden({ timeout: 20_000 })
-        console.log('visible', await this.jobs.pageLoad.isVisible())
         await this.page.goto(url);
         await expect(this.jobs.pageLoad).toBeHidden({ timeout: 20_000 })
         await this.page.waitForLoadState();
         const after = await this.jobs.numberOfRecords.textContent()
         const afterNum = after?.match(/\d+/)![0]
-        console.log('here', beforeNum, afterNum);
         expect(Number(afterNum)).toBeGreaterThan(Number(beforeNum));
     }
 

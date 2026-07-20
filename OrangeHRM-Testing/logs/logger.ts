@@ -13,7 +13,7 @@ export const logger = winston.createLogger({
         new winston.transports.File({
             filename: 'logs/app-logs.logs',
             options: {
-                flags: 'w'
+                flags: 'a'
             }
         })
     ]

@@ -1,6 +1,10 @@
 import { url } from "../data/userData";
 import { test } from "../fixtures/fixture";
 
+test.beforeEach('Dashboard', async ({ page }) => {
+  await page.goto(url.homepage);
+})
+
 test.skip('login Invalid User', async ({ basePage }) => {
   await basePage.login.gotoOrangeHRMLogin();
   await basePage.login.loginForInvalidUser();
@@ -136,9 +140,9 @@ test.describe('Admin', () => {
   test('Nationalities', async ({ basePage }) => {
     await basePage.navbar.navToAdminAndVerify();
     await basePage.navAdmin.openAndNavAndVerify('nationality', 'Nationalities');
-    await basePage.main.add('Australia', 'nationality');
-    await basePage.main.update('Australia', 'nationality', 'Australian')
-    await basePage.main.delete('Australian')
+    await basePage.main.add('abc', 'nationality');
+    await basePage.main.update('abc', 'nationality', 'abcd')
+    await basePage.main.delete('abcd')
   })
 })
 
