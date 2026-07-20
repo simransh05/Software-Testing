@@ -1,5 +1,6 @@
 import { Page, expect } from "playwright/test";
 import { mainSelectors } from "../../selectors/mainSelectors";
+import { logger } from "../../logs/logger";
 
 // for common function like update delete
 export class mainPage {
@@ -20,7 +21,7 @@ export class mainPage {
         await expect(this.page).toHaveURL(new RegExp(url), { timeout: 15_000 });
         const after = await this.main.numberOfRecords.textContent()
         const afterNum = after?.match(/\d+/)![0]
-        console.log('here', beforeNum, afterNum);
+        logger.info(`${beforeNum} After add ${afterNum}`)
         expect(Number(afterNum)).toBeGreaterThan(Number(beforeNum));
     }
 
@@ -33,7 +34,6 @@ export class mainPage {
         await expect(this.main.inputField.first()).toBeVisible({ timeout: 20_000 })
         await this.page.waitForTimeout(2000);
         await this.main.inputField.first().fill(update);
-        console.log(await this.main.inputField.first().inputValue())
         expect(await this.main.inputField.first().inputValue()).toBe(update);
         await this.main.saveBtn.click();
         await expect(this.main.pageLoad).toBeHidden({ timeout: 15_000 })
@@ -49,7 +49,7 @@ export class mainPage {
         await expect(this.main.pageLoad).toBeHidden({ timeout: 15_000 })
         const after = await this.main.numberOfRecords.textContent()
         const afterNum = after?.match(/\d+/)![0]
-        console.log('here', beforeNum, afterNum);
+        logger.info(`${beforeNum} After deleting ${afterNum}`)
         expect(Number(beforeNum)).toBeGreaterThan(Number(afterNum));
     }
 }

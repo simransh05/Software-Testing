@@ -50,7 +50,6 @@ export class userManagementPage {
     }
     async conditionForSearch() {
         const toast = await this.userMgt.toastMsg.isVisible();
-        // console.log('toast', toast);
         if (toast) {
             expect(this.userMgt.toastMsg.innerText()).toBe(msg.toastMsg)
         }

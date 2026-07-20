@@ -1,5 +1,6 @@
 import { expect, Page } from '@playwright/test'
 import { navbarSelector } from '../../selectors/navbarSelector'
+import { logger } from '../../logs/logger'
 
 export class navbarPage {
     page: Page
@@ -13,10 +14,9 @@ export class navbarPage {
         await this.page.waitForLoadState('load', { timeout: 60_000 })
         await expect(this.navbar.allMenuItem.first()).toBeVisible({ timeout: 10_000 })
         const beforeCount = await this.navbar.allMenuItem.count();
-        console.log(await this.navbar.allMenuItem.allInnerTexts());
+        logger.info(`${await this.navbar.allMenuItem.allInnerTexts()}`)
         await this.navbar.searchInput.fill(value);
         const afterCount = await this.navbar.allMenuItem.count();
-        console.log(beforeCount, afterCount);
         expect(beforeCount).toBeGreaterThan(afterCount)
     }
 
@@ -24,7 +24,6 @@ export class navbarPage {
         await this.page.waitForLoadState('load', { timeout: 60_000 })
         await this.navbar.allMenuItem.nth(0).click();
         this.page.waitForLoadState('load', { timeout: 60_000 })
-        // console.log(await this.navbar.allMenuItem.count())
         await expect(this.page).toHaveURL(/admin/);
     }
     async navToPIMAndVerify() {
