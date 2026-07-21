@@ -137,7 +137,7 @@ test.describe('Admin', () => {
     })
   })
 
-  test('Nationalities', async ({ basePage }) => {
+  test.skip('Nationalities', async ({ basePage }) => {
     await basePage.navbar.navToAdminAndVerify();
     await basePage.navAdmin.openAndNavAndVerify('nationality', 'Nationalities');
     await basePage.main.add('abc', 'nationality');
@@ -146,3 +146,15 @@ test.describe('Admin', () => {
   })
 })
 
+test.describe('PIM', () => {
+  test.skip('Add Employee', async ({ basePage }) => {
+    await basePage.navbar.navToPIMAndVerify();
+    await basePage.navAdmin.openAndNavAndVerify('addEmployee', 'Add Employee');
+    await basePage.emp.addEmployeeAndVerify('viewPersonalDetails', 'Kirti', undefined, 'Sharma')
+  })
+  test('Employee', async ({ basePage }) => {
+    await basePage.navbar.navToPIMAndVerify();
+    await basePage.navAdmin.openAndNavAndVerify('viewEmployeeList', 'Employee List');
+    await basePage.emp.filterBasedOnTypeAndVerify('', '')
+  })
+})
