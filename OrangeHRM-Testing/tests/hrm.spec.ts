@@ -155,6 +155,6 @@ test.describe('PIM', () => {
   test('Employee', async ({ basePage }) => {
     await basePage.navbar.navToPIMAndVerify();
     await basePage.navAdmin.openAndNavAndVerify('viewEmployeeList', 'Employee List');
-    await basePage.emp.filterBasedOnTypeAndVerify('', '')
+    await basePage.emp.filterBasedOnTypeAndVerify('Employee Name', 'Kirti Sharma')
   })
 })
