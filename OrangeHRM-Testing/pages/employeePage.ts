@@ -27,12 +27,17 @@ export class employeePage {
     }
 
     async filterBasedOnTypeAndVerify(type: string, value: string) {
-        await this.emp.filterGroup(type).fill(value);
-        await this.emp.filterGroup(type).selectOption(value);
+        await this.page.waitForLoadState('load', { timeout: 40_000 })
+        const typeOf = await this.emp.getFilterType(type);
+        console.log(typeOf)
+        if (typeOf === 'input') {
+            await this.emp.inputField(type).fill(value);
+        } else {
+            await this.emp.select(type).click();
+            await this.emp.option(value).click();
+        }
         await this.emp.saveAndSearchBtn.click();
         await this.conditionForSearch();
         await this.emp.resetBtn.click();
-        // type for which 
-        // if condition if the type is input then input fields as selectors 
     }
 }
