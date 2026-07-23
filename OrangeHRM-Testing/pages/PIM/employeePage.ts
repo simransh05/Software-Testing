@@ -1,6 +1,6 @@
 import { expect, Page } from "playwright/test";
-import { employeeSelectors } from "../selectors/employeeSelectors";
-import { msg } from "../data/userData";
+import { employeeSelectors } from "../../selectors/employeeSelectors";
+import { msg } from "../../data/userData";
 
 export class employeePage {
     emp: employeeSelectors
@@ -16,20 +16,24 @@ export class employeePage {
         await expect(this.page).toHaveURL(new RegExp(url), { timeout: 30_000 })
     }
 
-    async conditionForSearch() {
-        const toast = await this.emp.toastMsg.isVisible();
+    async conditionForSearch(name:string) {
+        const toast = await this.emp.toastMsg.first().isVisible();
+        console.log(toast);
         if (toast) {
-            expect(await this.emp.toastMsg.innerText()).toBe(msg.toastMsg)
+            // await this.page.pause()
+            console.log('msg', await this.emp.toastMsg.count())
+            expect(await this.emp.toastMsg.first().innerText()).toBe(msg.toastMsg)
         }
         else {
-            await expect(this.emp.tableValue.first()).toBeVisible();
+            await expect(this.emp.tableValue(name)).toBeVisible();
         }
     }
 
     async filterBasedOnTypeAndVerify(type: string, value: string) {
         await this.page.waitForLoadState('load', { timeout: 40_000 })
+        await expect(this.emp.resetBtn).toBeVisible({ timeout: 20_000 })
         const typeOf = await this.emp.getFilterType(type);
-        console.log(typeOf)
+        // console.log(typeOf)
         if (typeOf === 'input') {
             await this.emp.inputField(type).fill(value);
         } else {
@@ -37,7 +41,8 @@ export class employeePage {
             await this.emp.option(value).click();
         }
         await this.emp.saveAndSearchBtn.click();
-        await this.conditionForSearch();
+        await expect(this.emp.pageLoad).toBeHidden({ timeout: 20_000 })
+        await this.conditionForSearch(value);
         await this.emp.resetBtn.click();
     }
 }

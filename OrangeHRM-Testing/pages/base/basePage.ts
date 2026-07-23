@@ -6,7 +6,8 @@ import { navAdminPage } from "../admin/navAdminPage";
 import { jobPage } from "../admin/jobPage";
 import { mainPage } from "../main/mainPage";
 import { organizationPage } from "../admin/organizationPage";
-import { employeePage } from "../employeePage";
+import { employeePage } from "../PIM/employeePage";
+import { leavePage } from "../Leave/leavePage";
 
 export class basePage {
     login: loginPage
@@ -17,6 +18,7 @@ export class basePage {
     main: mainPage
     org: organizationPage
     emp: employeePage
+    leave: leavePage
     constructor(page: Page) {
         this.login = new loginPage(page);
         this.navbar = new navbarPage(page);
@@ -26,5 +28,6 @@ export class basePage {
         this.main = new mainPage(page);
         this.org = new organizationPage(page);
         this.emp = new employeePage(page);
+        this.leave = new leavePage(page);
     }
 }
