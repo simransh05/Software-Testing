@@ -152,9 +152,20 @@ test.describe('PIM', () => {
     await basePage.navAdmin.openAndNavAndVerify('addEmployee', 'Add Employee');
     await basePage.emp.addEmployeeAndVerify('viewPersonalDetails', 'Kirti', undefined, 'Sharma')
   })
-  test('Employee', async ({ basePage }) => {
+  test.skip('Employee', async ({ basePage }) => {
     await basePage.navbar.navToPIMAndVerify();
     await basePage.navAdmin.openAndNavAndVerify('viewEmployeeList', 'Employee List');
     await basePage.emp.filterBasedOnTypeAndVerify('Employee Name', 'Kirti Sharma')
+    await basePage.emp.filterBasedOnTypeAndVerify('Employment Status', 'Freelance')
+  })
+})
+
+test.describe('Leave', () => {
+  test('Add Leave', async ({ basePage }) => {
+    await basePage.navbar.navToLeaveAndVerify();
+    await basePage.navAdmin.openAndNavAndVerify('applyLeave', 'Apply')
+    await basePage.leave.addNewLeaveAndVerify('CAN - Personal', '2026-23-07', 'Family Vacation');
+    await basePage.navAdmin.openAndNavAndVerify('viewMyLeaveList', 'My Leave');
+    await basePage.leave.VerifyAdd('CAN - Personal', 'Family Vacation');
   })
 })

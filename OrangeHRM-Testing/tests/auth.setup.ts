@@ -8,7 +8,6 @@ setup('authenticate', async ({ basePage, page }) => {
     await page.waitForLoadState('load', { timeout: 50_000 })
     // await expect(page).toHaveScreenshot('login-page.png')
     await basePage.login.loginValidUser();
-    await page.waitForLoadState('load', { timeout: 120_000 })
     logger.info('Authenticate')
     await page.context().storageState({
         path: 'data/user.json',
