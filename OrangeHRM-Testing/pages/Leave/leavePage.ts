@@ -3,10 +3,11 @@ import { leaveSelectors } from "../../selectors/leaveSelectors";
 
 export class leavePage {
     leave: leaveSelectors
-    constructor(page: Page) {
+    constructor(private page: Page) {
         this.leave = new leaveSelectors(page);
     }
     async addNewLeaveAndVerify(name: string, from: string, comment: string, to?: string) {
+        await this.page.waitForLoadState('load', { timeout: 50_000 })
         await this.leave.openSelect.first().click();
         await this.leave.leaveType(name).click();
         await this.leave.date.first().fill(from);
@@ -23,7 +24,7 @@ export class leavePage {
         await this.leave.openSelect.nth(1).click();
         await this.leave.leaveType(name).click();
         await this.leave.applyAndSearchBtn.click();
-        await expect(this.leave.pageLoad).toBeHidden({timeout:40_000})
+        await expect(this.leave.pageLoad).toBeHidden({ timeout: 40_000 })
         await expect(this.leave.row(comment)).toBeVisible({ timeout: 20_000 })
     }
 }

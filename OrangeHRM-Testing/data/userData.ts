@@ -76,7 +76,9 @@ const data = {
 const url = {
     loginPageURL: 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login',
     payGrades: 'https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewPayGrades',
-    homepage: 'https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index'
+    homepage: 'https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index',
+    punchIn: 'https://opensource-demo.orangehrmlive.com/web/index.php/attendance/punchIn',
+    punchOut: 'https://opensource-demo.orangehrmlive.com/web/index.php/attendance/punchOut'
 }
 
 
