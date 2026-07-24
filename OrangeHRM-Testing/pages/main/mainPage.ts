@@ -1,6 +1,7 @@
 import { Page, expect } from "playwright/test";
 import { mainSelectors } from "../../selectors/mainSelectors";
 import { logger } from "../../logs/logger";
+import { msg } from "../../data/userData";
 
 // for common function like update delete
 export class mainPage {
@@ -48,7 +49,13 @@ export class mainPage {
         await this.main.confirmBtn.click();
         await expect(this.main.pageLoad).toBeHidden({ timeout: 15_000 })
         const after = await this.main.numberOfRecords.textContent()
-        const afterNum = after?.match(/\d+/)![0]
+        let afterNum;
+        console.log(after);
+        if (after === msg.toastMsg) {
+            afterNum = 0;
+        } else {
+            afterNum = after?.match(/\d+/)![0];
+        }
         logger.info(`${beforeNum} After deleting ${afterNum}`)
         expect(Number(beforeNum)).toBeGreaterThan(Number(afterNum));
     }

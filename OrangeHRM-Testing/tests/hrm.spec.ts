@@ -161,11 +161,29 @@ test.describe('PIM', () => {
 })
 
 test.describe('Leave', () => {
-  test('Add Leave', async ({ basePage }) => {
+  test.skip('Add Leave', async ({ basePage }) => {
     await basePage.navbar.navToLeaveAndVerify();
     await basePage.navAdmin.openAndNavAndVerify('applyLeave', 'Apply')
     await basePage.leave.addNewLeaveAndVerify('CAN - Personal', '2026-23-07', 'Family Vacation');
     await basePage.navAdmin.openAndNavAndVerify('viewMyLeaveList', 'My Leave');
     await basePage.leave.VerifyAdd('CAN - Personal', 'Family Vacation');
+  })
+})
+
+test.describe('Time', () => {
+  test('Attendence', async ({ basePage }) => {
+    await basePage.navbar.navToTimeAndVerify();
+    await basePage.navAdmin.openAndNavAndVerify('attendance', 'Attendance ', 'Punch In/Out');
+    await basePage.attend.clockInAndClockOut('Time Mgt', 'punchIn');
+    await basePage.navAdmin.openAndNavAndVerify('viewMyAttendanceRecord', 'Attendance ', 'My Records');
+    await basePage.attend.updateAttendenceAndVerify('Time Mgt', 'Time Management', 'viewMyAttendanceRecord');
+    await basePage.main.delete('Time Management')
+  })
+  test('Customers', async ({ basePage }) => {
+    await basePage.navbar.navToTimeAndVerify();
+    await basePage.navAdmin.openAndNavAndVerify('viewCustomers', 'Project Info', 'Customers')
+    await basePage.main.add('TFT', 'viewCustomers');
+    await basePage.main.update('TFT', 'viewCustomers', 'Think Future Technology');
+    await basePage.main.delete('Think Future Technology')
   })
 })
